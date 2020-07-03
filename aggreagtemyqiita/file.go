@@ -18,15 +18,20 @@ type Params struct {
 	Token  string
 }
 
+var (
+	osOpenFile      = os.OpenFile
+	bufioNewScanner = bufio.NewScanner
+)
+
 // GetParameters get the default value from app.properties.
 func GetParameters(params *Params) error {
-	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0666)
+	file, err := osOpenFile(filename, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+	scanner := bufioNewScanner(file)
 	for scanner.Scan() {
 		s := strings.Split(scanner.Text(), "=")
 

@@ -25,6 +25,10 @@ type pageDetailItem struct {
 }
 
 func (item *pageDetailItem) likeRatio() float64 {
+	if item.PageViewsCount == 0 {
+		return 0
+	}
+
 	return float64(item.LikesCount) / float64(item.PageViewsCount)
 }
 
